@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="4" time="80.311" timestamp="2024-03-20T16:46:23.820026" hostname="DESKTOP-M8QGMIG"><testcase classname="test_demo" name="test_github" time="16.856" /><testcase classname="test_demo" name="test_github_data" time="15.814" /><testcase classname="test_demo" name="test_case_01" time="40.096"><failure message="selenium.common.exceptions.TimeoutException: Message: &#10;Stacktrace:&#10;&#09;GetHandleVerifier [0x00007FF7457FAD02+56930]&#10;&#09;(No symbol) [0x00007FF74576F602]&#10;&#09;(No symbol) [0x00007FF7456242E5]&#10;&#09;(No symbol) [0x00007FF7456698ED]&#10;&#09;(No symbol) [0x00007FF745669A2C]&#10;&#09;(No symbol) [0x00007FF7456AA967]&#10;&#09;(No symbol) [0x00007FF74568BCDF]&#10;&#09;(No symbol) [0x00007FF7456A81E2]&#10;&#09;(No symbol) [0x00007FF74568BA43]&#10;&#09;(No symbol) [0x00007FF74565D438]&#10;&#09;(No symbol) [0x00007FF74565E4D1]&#10;&#09;GetHandleVerifier [0x00007FF745B76F8D+3711213]&#10;&#09;GetHandleVerifier [0x00007FF745BD04CD+4077101]&#10;&#09;GetHandleVerifier [0x00007FF745BC865F+4044735]&#10;&#09;GetHandleVerifier [0x00007FF745899736+706710]&#10;&#09;(No symbol) [0x00007FF74577B8DF]&#10;&#09;(No symbol) [0x00007FF745776AC4]&#10;&#09;(No symbol) [0x00007FF745776C1C]&#10;&#09;(No symbol) [0x00007FF7457668D4]&#10;&#09;BaseThreadInitThunk [0x00007FFC63217344+20]&#10;&#09;RtlUserThreadStart [0x00007FFC646026B1+33]">def test_case_01():
+        with utils.services_context_wrapper("test_case_1.png") as driver:
+            driver.maximize_window()
+            utils.LOGIN(driver)
+            driver.implicitly_wait(10)
+            act_title = driver.find_element(
+                By.XPATH, LOGIN_BUTTON
+            ).text
+            assert act_title == "Login"
+            logging.info("Login is successful.")
+            rt_value = driver.find_element(
+                By.XPATH, LOGIN_BUTTON
+            ).is_displayed()
+            assert rt_value
+            # click at crossbar
+&gt;           (WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, CROSS_ICON))).click())
+
+test_demo.py:57: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = &lt;selenium.webdriver.support.wait.WebDriverWait (session="6558eb19ccbd804780c89fb638fac1ad")&gt;
+method = &lt;function presence_of_element_located.&lt;locals&gt;._predicate at 0x00000273EC1F85E0&gt;, message = ''
+
+    def until(self, method, message: str = ""):
+        """Calls the method provided with the driver as an argument until the \
+        return value does not evaluate to ``False``.
+    
+        :param method: callable(WebDriver)
+        :param message: optional message for :exc:`TimeoutException`
+        :returns: the result of the last call to `method`
+        :raises: :exc:`selenium.common.exceptions.TimeoutException` if timeout occurs
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            time.sleep(self._poll)
+            if time.monotonic() &gt; end_time:
+                break
+&gt;       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message: 
+E       Stacktrace:
+E       	GetHandleVerifier [0x00007FF7457FAD02+56930]
+E       	(No symbol) [0x00007FF74576F602]
+E       	(No symbol) [0x00007FF7456242E5]
+E       	(No symbol) [0x00007FF7456698ED]
+E       	(No symbol) [0x00007FF745669A2C]
+E       	(No symbol) [0x00007FF7456AA967]
+E       	(No symbol) [0x00007FF74568BCDF]
+E       	(No symbol) [0x00007FF7456A81E2]
+E       	(No symbol) [0x00007FF74568BA43]
+E       	(No symbol) [0x00007FF74565D438]
+E       	(No symbol) [0x00007FF74565E4D1]
+E       	GetHandleVerifier [0x00007FF745B76F8D+3711213]
+E       	GetHandleVerifier [0x00007FF745BD04CD+4077101]
+E       	GetHandleVerifier [0x00007FF745BC865F+4044735]
+E       	GetHandleVerifier [0x00007FF745899736+706710]
+E       	(No symbol) [0x00007FF74577B8DF]
+E       	(No symbol) [0x00007FF745776AC4]
+E       	(No symbol) [0x00007FF745776C1C]
+E       	(No symbol) [0x00007FF7457668D4]
+E       	BaseThreadInitThunk [0x00007FFC63217344+20]
+E       	RtlUserThreadStart [0x00007FFC646026B1+33]
+
+C:\Users\Acer\AppData\Local\Programs\Python\Python311\Lib\site-packages\selenium\webdriver\support\wait.py:95: TimeoutException</failure></testcase><testcase classname="test_demo" name="test_case_02" time="6.504"><failure message="AssertionError: assert 'Login' == 'gin'&#10;  - gin&#10;  + Login&#10;  ? ++">def test_case_02():
+        with utils.services_context_wrapper("test_case_2.png") as driver:
+            driver.maximize_window()
+            utils.LOGIN(driver)
+            driver.implicitly_wait(10)
+            act_title = driver.find_element(
+                By.XPATH, LOGIN_BUTTON
+            ).text
+&gt;           assert act_title == "gin"
+E           AssertionError: assert 'Login' == 'gin'
+E             - gin
+E             + Login
+E             ? ++
+
+test_demo.py:77: AssertionError</failure></testcase></testsuite></testsuites>

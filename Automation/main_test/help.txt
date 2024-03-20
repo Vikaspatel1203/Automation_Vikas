@@ -1,0 +1,65 @@
+def test_Assign_Mealcode_001():
+    try:
+        with services_context_wrapper("test_Assign_Mealcode_001.png") as driver:
+            driver.maximize_window()
+            Till_Login.Login_airline(driver)
+            driver.implicitly_wait(10)
+            act_title = driver.find_element(
+                By.XPATH, "//a[@id='pimcore_logout']"
+            ).get_attribute("id")
+            assert act_title == "pimcore_logout"
+            logging.info("Login is successful.")
+            WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.ID, "pimcore_menu_massupdate")))
+            driver.find_element(By.ID, "pimcore_menu_massupdate").click()
+            driver.find_element(By.XPATH, '//span[text()="Open Mealcode Module"]').click()
+            WebDriverWait(driver, 120).until(
+                EC.presence_of_element_located((By.XPATH, '(//span[text()="Meal Code"])[2]')))
+            MEAL_CODE_MODULE = driver.find_element(By.XPATH, '(//span[text()="Meal Code"])[2]').is_displayed()
+            assert MEAL_CODE_MODULE
+            time.sleep(10)
+            Success_List_Append("test_Assign_Mealcode_001",
+                                " Verify by clicking on the Meal Code Module icon at left side bar", "Pass")
+            logging.info("Admin/manager is redirect to the Meal Code Module screen")
+    except Exception as e:
+        logging.info(f"Error- {e}")
+        Success_List_Append("test_Assign_Mealcode_001",
+                            "Verify by clicking on the Meal Code Module icon at left side bar", "Fail")
+        Failure_Cause_Append("test_Assign_Mealcode_001",
+                             "Verify by clicking on the Meal Code Module icon at left side bar",
+                             e)
+        raise e
+
+def test_CRUDProduct_001():
+    try:
+        with services_context_wrapper("test_CRUDProduct_001.png") as driver:
+            driver.maximize_window()
+            Till_Login.Login_store(driver)
+            driver.implicitly_wait(10)
+            act_title = driver.find_element(
+                By.XPATH, "//a[@id='pimcore_logout']"
+            ).get_attribute("id")
+            assert act_title == "pimcore_logout"
+            logging.info("Login is successful.")
+            WebDriverWait(driver, 10).until(
+                EC.presence_of_element_located((By.ID, "pimcore_menu_massupdate")))
+            driver.find_element(By.ID, "pimcore_menu_massupdate").click()
+            driver.find_element(By.XPATH, '//span[text()="Create New Product"]').click()
+            PRODUCT_SKU = driver.find_element(By.XPATH, '//span[text()="Product SKU "]').is_displayed()
+            logging.info(PRODUCT_SKU)
+            CATEGORY = driver.find_element(By.XPATH, '(//span[text()="Category "])').is_displayed()
+            logging.info(CATEGORY)
+            PRODUCT_SET = driver.find_element(By.XPATH, '//span[text()="Product Set "]').is_displayed()
+            logging.info(PRODUCT_SET)
+            assert PRODUCT_SKU and PRODUCT_SET and CATEGORY
+            time.sleep(5)
+            Success_List_Append("test_CRUDProduct_001",
+                                "Verify by clicking on the Create New product icon in the left panel", "Pass")
+            logging.info(f"Successfully shown Product SKU, Category and Product set options.")
+    except Exception as e:
+        logging.info(f"Error- {e}")
+        Success_List_Append("test_CRUDProduct_001",
+                            "Verify by clicking on the Create New product icon in the left panel", "Fail")
+        Failure_Cause_Append("test_CRUDProduct_001",
+                             "Verify by clicking on the Create New product icon in the left panel",
+                             e)
+        raise e
